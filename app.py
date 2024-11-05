@@ -1,15 +1,30 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import psycopg2
-from config import DATABASE
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": ["http://localhost:5173", "https://subtle-capybara-f5d487.netlify.app/"]}})
+db_user= os.getenv('DB_USER')
+db_pass= os.getenv('DB_PASS')
+db_host= os.getenv('DB_HOST')
+db_port= os.getenv('DB_PORT')
+db_name= os.getenv('DB_NAME')
+origin_1= os.getenv('ORIGIN_1')
+origin_2= os.getenv('ORIGIN_2')
+
+CORS(app, resources={r"/*": {"origins": [origin_1, origin_2]}})
 
 def get_db_connection():
-    conn = psycopg2.connect(**DATABASE)
-    return conn
+    try:
+        connectionStr = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
+        conn = psycopg2.connect(connectionStr)
+        return conn
+    except psycopg2.Error as e:
+        return e
 
 @app.route('/get-notes', methods=['GET'])
 def get_notes():

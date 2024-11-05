@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS m_notes (
-    id SERIAL PRIMARY KEY,
-    content TEXT,
-    color VARCHAR(10),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP
-);
