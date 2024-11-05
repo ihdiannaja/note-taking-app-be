@@ -16,8 +16,6 @@ db_name= os.getenv('DB_NAME')
 origin_1= os.getenv('ORIGIN_1')
 origin_2= os.getenv('ORIGIN_2')
 
-CORS(app, resources={r"/*": {"origins": [origin_1, origin_2]}})
-
 def get_db_connection():
     try:
         connectionStr = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
